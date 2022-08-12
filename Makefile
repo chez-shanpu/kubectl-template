@@ -1,6 +1,7 @@
 SHELL:=/bin/bash
 
 GO=go
+GO_LINT=golangci-lint
 GO_VULN=govulncheck
 
 GO_VET_OPTS=-v
@@ -30,8 +31,15 @@ vet:
 	$(GO) vet $(GO_VET_OPTS) ./...
 
 .PHONY: test
-test: vet
+test:
 	$(GO) test $(GO_TEST_OPTS) ./...
+
+.PHONY: lint
+lint:
+	$(GO_LINT) run
+
+.PHONY: check
+check: vet test lint vuln
 
 .PHONY: mod
 mod:
@@ -43,6 +51,6 @@ clean:
 	-rm $(RM_OPTS) bin/*
 
 .PHONY: all
-all: mod test vuln build
+all: mod check build
 
 .DEFAULT_GOAL=all

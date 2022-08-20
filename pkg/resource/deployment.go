@@ -46,7 +46,7 @@ func DeploymentReplicas(replicas int64) DeploymentTemplateOption {
 }
 
 func NewDeploymentTemplate(name string, opts map[string]string) (*DeploymentTemplate, error) {
-	setters, err := ParseMapOpts(opts)
+	setters, err := ParseDeploymentMapOpts(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func (t *DeploymentTemplate) Generate() (string, error) {
 	return buf.String(), nil
 }
 
-func ParseMapOpts(opts map[string]string) ([]DeploymentTemplateOption, error) {
+func ParseDeploymentMapOpts(opts map[string]string) ([]DeploymentTemplateOption, error) {
 	var setters []DeploymentTemplateOption
 
 	for key, val := range opts {

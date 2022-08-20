@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{.Name}}
+spec:
+  jobTemplate:
+    metadata:
+      name: {{.Name}}
+    spec:
+      template:
+        spec:
+          containers:
+          - image: {{.Opts.Image}}
+            name: {{.Name}}
+            resources: { }
+          restartPolicy: OnFailure
+  schedule: {{.Opts.Schedule}}

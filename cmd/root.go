@@ -46,6 +46,12 @@ var rootCmd = &cobra.Command{
 			if template, err = resource.NewDeploymentTemplate(name, opts); err != nil {
 				return err
 			}
+		case "cj":
+			fallthrough
+		case "cronjob":
+			if template, err = resource.NewCronjobTemplate(name, opts); err != nil {
+				return err
+			}
 		default:
 			if template, err = resource.NewCustomTemplate(args[0], name, opts); err != nil {
 				return err
